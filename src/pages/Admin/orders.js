@@ -212,6 +212,13 @@ export default function OrderManagement() {
                     onChange={(e) => handleStatusChange(order.id, e.target.value)}
                     className="text-sm border border-gray-300 rounded-lg px-3 py-1.5 focus:ring-2 focus:ring-green-500 focus:border-transparent"
                   >
+                    {/* <option value="Processing">Payment Processing</option>
+                    <option value="paid">Paid</option>
+                    <option value="Shipped">Shipped</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Cancelled">Cancelled</option>
+                    <option value="Returned">Returned</option>
+                    <option value="failed">Payment Failed</option> */}
                     <option value="Order placed">Order placed</option>
                     <option value="Order delivered">Order delivered</option>
                     <option value="Order cancelled">Order cancelled</option>
