@@ -11,6 +11,7 @@ export default function OrderManagement() {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [orderItems, setOrderItems] = useState([]);
+  const [statusFilter, setStatusFilter] = useState('');
   const { language } = useLanguage();
 
   const translations = {
@@ -37,6 +38,10 @@ export default function OrderManagement() {
       arabicDescription: "Arabic Description",
       price: "Price",
       total: "Total",
+      allStatuses: "All Statuses",
+    orderPlaced: "Order placed",
+    orderDelivered: "Order delivered",
+    orderCancelled: "Order cancelled",
     },
     ar: {
       title: "الطلبات",
@@ -61,6 +66,10 @@ export default function OrderManagement() {
       arabicDescription: "الوصف بالعربية",
       price: "السعر",
       total: "الإجمالي",
+      allStatuses: "جميع الحالات",
+    orderPlaced: "تم تقديم الطلب",
+    orderDelivered: "تم تسليم الطلب",
+    orderCancelled: "تم إلغاء الطلب",
     }
   };
 
@@ -144,10 +153,11 @@ export default function OrderManagement() {
     }
   };
   
-  const filteredOrders = orders.filter((order) =>
-    (order.id?.toLowerCase().includes(searchQuery.toLowerCase()) || 
-     order.status?.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  const filteredOrders = orders.filter((order) => {
+    const matchesSearch = order.id?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesStatus = !statusFilter || order.status === statusFilter;
+    return matchesSearch && matchesStatus;
+  });
   
 
   return (
@@ -161,6 +171,16 @@ export default function OrderManagement() {
               <div className="flex items-center justify-between">
                 <h1 className="text-2xl font-semibold text-gray-800">{t.title}</h1>
                 <div className="flex items-center space-x-4">
+                <select
+    value={statusFilter}
+    onChange={(e) => setStatusFilter(e.target.value)}
+    className="py-2 pl-3 pr-8 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+  >
+    <option value="">{t.allStatuses}</option>
+    <option value="Order placed">{t.orderPlaced}</option>
+    <option value="Order delivered">{t.orderDelivered}</option>
+    <option value="Order cancelled">{t.orderCancelled}</option>
+  </select>
                   <div className="relative">
                     <input
                       type="text"
